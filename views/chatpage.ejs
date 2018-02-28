@@ -64,14 +64,7 @@
 			if(data.s==1){
 				console.log(data);
 				 $("#messBox").append("<li style='font-weight:bold;color:"+data.color+"'><div class='rightside-left-chat'><span><i class='fa fa-circle' aria-hidden='true'></i> "+data.username+"<small> "+data.date+"</small> </span><br><br><p>"+data.mess+"</p></div></li>");
-				// <li>
-				// 				<div class="rightside-left-chat">
-				// 					<span><i class="fa fa-circle" aria-hidden="true"></i> joi chak <small>10:00 AM,Today</small> </span><br><br>
-				// 					<p>Lorem ipsum dolor sit ameeserunt mollit anim id est laborum.
-				// 					Lorem ipsum dolor sit ameeserunt mollit anim mollit anim laborum.
-				// 					Lorem ipsum dolor sit ameeserunt mollit anim id est laborum.</p>
-				// 				</div>
-				// 			</li>
+				
 			}
 			else
 			{
@@ -79,6 +72,7 @@
 			}
 		});
 
+		// jquery
 		$(document).ready(function(){
 			$("#loginForm").show();
 			$("#chatForm").hide();
@@ -106,6 +100,12 @@
 		});
 	</script>
 
+	<script type="text/javascript">
+		window.setInterval(function() {
+	  var elem = document.getElementById('messBox');
+	  elem.scrollTop = elem.scrollHeight;
+	}, 5000);
+	</script>
 
 </head>
 <body>
@@ -241,6 +241,7 @@
 	</div>
 
 	<script type="text/javascript">
+
 		$(document).ready(function(){
 	    	var height = $(window).height();
 	    	$('.left-chat').css('height', (height - 92) + 'px');
