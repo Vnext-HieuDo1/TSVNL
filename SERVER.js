@@ -51,8 +51,8 @@ io.on("connection",function(socket){
 });
 	
 
-server.listen(process.env.PORT||8080);
-// server.listen(8080);
+ server.listen(process.env.PORT||8080);
+ // server.listen(8080);
 app.get("/",function(req,res){
 	res.render("chatpage");
 });

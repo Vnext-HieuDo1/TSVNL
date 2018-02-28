@@ -36,7 +36,7 @@
 	<script>
 
 			var socket=io("https://tamsuvoinguoila.herokuapp.com/");
-		// var socket=io("http://localhost:8080/");
+		 // var socket=io("http://localhost:8080/");
 		//bat su kien login fail
 		socket.on("server-send-login-failed",function(){
 			alert("Tên người dùng đã tồn tại!");
@@ -61,6 +61,8 @@
 		});
 		//Nhan message
 		socket.on("server-send-mess",function(data){
+			//Auto scroll xuong cuoi div khi nhan duoc message
+			$("#chatBox").animate({ scrollTop: $('#chatBox').prop("scrollHeight")}, 1000);
 			if(data.s==1){
 				console.log(data);
 				 $("#messBox").append("<li style='font-weight:bold;color:"+data.color+"'><div class='rightside-left-chat'><span><i class='fa fa-circle' aria-hidden='true'></i> "+data.username+"<small> "+data.date+"</small> </span><br><br><p>"+data.mess+"</p></div></li>");
@@ -74,6 +76,9 @@
 
 		// jquery
 		$(document).ready(function(){
+
+			
+
 			$("#loginForm").show();
 			$("#chatForm").hide();
 			//Bat su kien login
@@ -101,10 +106,10 @@
 	</script>
 
 	<script type="text/javascript">
-		window.setInterval(function() {
-	  var elem = document.getElementById('messBox');
-	  elem.scrollTop = elem.scrollHeight;
-	}, 5000);
+	// 	window.setInterval(function() {
+	//   var elem = document.getElementById('chatBox');
+	//   elem.scrollTop = elem.scrollHeight;
+	// }, 10);
 	</script>
 
 </head>
@@ -210,7 +215,7 @@
 
 				<!-- Noi dung chat -->
 				<div class="row">
-					<div class="col-md-12 right-header-contentChat">
+					<div class="col-md-12 right-header-contentChat" id="chatBox">
 						<ul id="messBox">
 							<!-- <li>
 								<div class="rightside-left-chat">
