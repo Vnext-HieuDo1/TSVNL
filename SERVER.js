@@ -21,6 +21,7 @@ function getRandomColor() {
 
 io.on("connection",function(socket){
 	var color_username= getRandomColor();
+	var side=Math.floor((Math.random() * 2) + 1);
 	console.log(socket.id+ " vua ket noi");
 	socket.on("client-send-username",function(data){
 		if(user_online_arr.indexOf(data)>=0){
@@ -39,7 +40,7 @@ io.on("connection",function(socket){
 	});
 	socket.on("user-send-mess",function(data){
 				var currentdate = new Date().toLocaleString();
-				io.sockets.emit("server-send-mess",{username:socket.username,mess:data,date:currentdate,s:1,color:color_username});
+				io.sockets.emit("server-send-mess",{username:socket.username,mess:data,date:currentdate,s:side,color:color_username});
 			});
 
 	//Xoa userkhi disconnect
