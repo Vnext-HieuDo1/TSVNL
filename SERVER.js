@@ -21,19 +21,25 @@ function getRandomColor() {
 
 io.on("connection",function(socket){
 	var color_username= getRandomColor();
+
+
+
 	var side=Math.floor((Math.random() * 2) + 1);
 	console.log(socket.id+ " vua ket noi");
 	socket.on("client-send-username",function(data){
-		if(user_online_arr.indexOf(data)>=0){
+		if(user_online_arr.indexOf(data.username)>=0){
 
 			socket.emit("server-send-login-failed");
 			
 		}
 		else
 		{
-			user_online_arr.push(data);
-			socket.username=data;
-			socket.emit("server-send-username",data);
+			var rand_ava=data.gender+Math.floor((Math.random()*5)+1);
+
+			user_online_arr.push({username:data.username,gender:rand_ava});
+			socket.username=data.username;
+			console.log(data.gender);
+			socket.emit("server-send-username",{username:data.username,gender:rand_ava});
 			io.sockets.emit("server-send-userarr",user_online_arr);
 			
 		}

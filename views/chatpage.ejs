@@ -37,8 +37,8 @@
 	<audio id="audio" src="noti.mp3"></audio>
 	<script>
 
-			var socket=io("https://tamsuvoinguoila.herokuapp.com/");
-		 // var socket=io("http://localhost:8080/");
+			 var socket=io("https://tamsuvoinguoila.herokuapp.com/");
+		  // var socket=io("http://localhost:8080/");
 		//bat su kien login fail
 		socket.on("server-send-login-failed",function(){
 			alert("Tên người dùng đã tồn tại!");
@@ -48,7 +48,8 @@
 		socket.on("server-send-username",function(data){
 			$("#loginForm").hide();
 			$("#chatForm").show(1000);
-			$("#name").append(data);
+			$("#name").append(data.username);
+			$("#avatar").attr('src','image/'+data.gender+".png");
 		});
 
 		//Do danh sach useronline
@@ -56,7 +57,7 @@
 			$("#onlinelist").html("");
 			data.forEach(function(element){
 					
-					$("#onlinelist").append("<li><div class='chat-left-img'><img src='image/businessman.png'></div><div class='chat-left-detail'><p>"+element+"</p><span><i class='fa fa-circle' aria-hidden='true'></i> online</span></div></li>");
+					$("#onlinelist").append("<li><div class='chat-left-img'><img src='image/"+element.gender+".png'></div><div class='chat-left-detail'><p>"+element.username+"</p><span><i class='fa fa-circle' aria-hidden='true'></i> online</span></div><img style='float:right;margin-right:25px;line-height:5px;cursor:pointer' width = '50px' height='40px' src='http://www.sniperdecals.com/images/Fist.png'title='Đấm "+element.username+"' ></li>");
 
 					
 			});
@@ -91,11 +92,24 @@
 				if($("#username").val()==""){
 					alert("Bạn cần nhập tên!");
 				}
-				else
-				{
-				$("#loginBtn").attr('disabled',true);
-				$("#loginBtn").html("Xin đợi...");
-				socket.emit("client-send-username",$("#username").val());
+				else{
+					 if(!$('#gender_nam').is(":checked")&&!$('#gender_nu').is(":checked")&&!$('#gender_3d').is(":checked"))
+					{
+						alert("Bạn cần chọn giới tính !!")
+					}
+					else
+					{
+
+					var user_gender;
+					if($('#gender_nam').is(":checked")) {user_gender="nam";}
+					if($('#gender_nu').is(":checked")) {user_gender="nu";}
+					if($('#gender_3d').is(":checked")) {user_gender="3d";}
+
+					$("#loginBtn").attr('disabled',true);
+					$("#loginBtn").html("Xin đợi...");
+					socket.emit("client-send-username",{username:$("#username").val(),gender:user_gender});
+
+					}
 				}
 			});
 			//Click nut enter login
@@ -103,12 +117,25 @@
 			    	
 				    if (e.which == 13) {
 				    	if($("#username").val()==""){
-						alert("Bạn cần nhập tên!");
+					alert("Bạn cần nhập tên!");
+					}
+					else{
+						 if(!$('#gender_nam').is(":checked")&&!$('#gender_nu').is(":checked")&&!$('#gender_3d').is(":checked"))
+						{
+							alert("Bạn cần chọn giới tính !!")
 						}
 						else
 						{
-					       socket.emit("client-send-username",$("#username").val());
-				     }  
+						var user_gender;
+						if($('#gender_nam').is(":checked")) {user_gender="nam";}
+						if($('#gender_nu').is(":checked")) {user_gender="nu";}
+						if($('#gender_3d').is(":checked")) {user_gender="3d";}
+
+						$("#loginBtn").attr('disabled',true);
+						$("#loginBtn").html("Xin đợi...");
+						socket.emit("client-send-username",{username:$("#username").val(),gender:user_gender});
+						}
+					}
 			    }
 			});
 
@@ -182,15 +209,15 @@
 					<!-- Gioi tinh -->
 					<div style="padding-bottom: 5px;" id="gender">
 					  <label>
-					    <input type="radio" class="option-input radio" value="nam"  name="gender"/>
+					    <input id="gender_nam" type="radio" class="option-input radio" value="nam"  name="gender"/>
 					    Nam
 					  </label>
 					  <label>
-					    <input type="radio" class="option-input radio" value="nu" name="gender"/>
+					    <input id="gender_nu" type="radio" class="option-input radio" value="nu" name="gender"/>
 					    Nữ
 					  </label>
 					  <label>
-					    <input type="radio" class="option-input radio" value="3d" name="gender" />
+					    <input id="gender_3d" type="radio" class="option-input radio" value="3d" name="gender" />
 					    3D
 					  </label>
 					</div>
@@ -249,16 +276,17 @@
 				<!--  -->
 			</div>
 
+			<!-- Ten user truy cap -->
 			<div class="col-md-9 col-sm-9 col-xs-12 right-sidebar">
-				<!-- Ten username login -->
+				
 				<div class="row">
 					<div class="col-md-12 right-header">
 						<div class="right-header-img">
-							<img src="image/businessman.png">
+							<img id="avatar" src="image/businessman.png">
 						</div>
 						<div class="right-header-detail">
 							<p id="name"></p>
-							
+							<span><i style="color:red;" class='fa fa-circle' aria-hidden='true'></i> online</span>
 						</div>
 					</div>
 				</div>
