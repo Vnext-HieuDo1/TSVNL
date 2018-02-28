@@ -33,6 +33,8 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
 	<script type="text/javascript" src="socket.io/socket.io.js"></script>
+	<link rel=stylesheet href="style.css">
+	<audio id="audio" src="noti.mp3"></audio>
 	<script>
 
 			var socket=io("https://tamsuvoinguoila.herokuapp.com/");
@@ -63,6 +65,9 @@
 		socket.on("server-send-mess",function(data){
 			//Auto scroll xuong cuoi div khi nhan duoc message
 			$("#chatBox").animate({ scrollTop: $('#chatBox').prop("scrollHeight")}, 1000);
+			//Notification sound
+			$('#audio')[0].play();
+
 			if(data.s==1){
 				console.log(data);
 				 $("#messBox").append("<li style='font-weight:bold;color:"+data.color+"'><div class='rightside-left-chat'><span><i class='fa fa-circle' aria-hidden='true'></i> "+data.username+"<small> "+data.date+"</small> </span><br><br><p>"+data.mess+"</p></div></li>");
@@ -83,11 +88,34 @@
 			$("#chatForm").hide();
 			//Bat su kien login
 			$("#loginBtn").click(function(){
+				if($("#username").val()==""){
+					alert("Bạn cần nhập tên!");
+				}
+				else
+				{
 				$("#loginBtn").attr('disabled',true);
 				$("#loginBtn").html("Xin đợi...");
 				socket.emit("client-send-username",$("#username").val());
+				}
+			});
+			//Click nut enter login
+			$("#username").keypress(function (e) {
+			    	
+				    if (e.which == 13) {
+				    	if($("#username").val()==""){
+						alert("Bạn cần nhập tên!");
+						}
+						else
+						{
+					       socket.emit("client-send-username",$("#username").val());
+				     }  
+			    }
 			});
 
+
+
+			//Bat  su kien gui message
+			//Click nut enter gui message
 			$("#message").keypress(function (e) {
 			    if (e.which == 13) {
 
@@ -140,11 +168,34 @@
 							Tên đăng nhập
 						</span>
 					</div>
+					
+
 					<div class="wrap-input100 validate-input" data-validate = "Username is required">
 						<input id="username" class="input100" type="text" name="username" >
 						<span class="focus-input100"></span>
 					</div>
-					
+					<div class="p-t-31 p-b-9">
+						<span class="txt1">
+							Giới tính
+						</span>
+					</div>
+					<!-- Gioi tinh -->
+					<div style="padding-bottom: 5px;" id="gender">
+					  <label>
+					    <input type="radio" class="option-input radio" value="nam"  name="gender"/>
+					    Nam
+					  </label>
+					  <label>
+					    <input type="radio" class="option-input radio" value="nu" name="gender"/>
+					    Nữ
+					  </label>
+					  <label>
+					    <input type="radio" class="option-input radio" value="3d" name="gender" />
+					    3D
+					  </label>
+					</div>
+				  <!--  -->
+
 				<div class="container-login100-form-btn m-t-17">
 						<button id="loginBtn" class="login100-form-btn">
 							Vào chat
