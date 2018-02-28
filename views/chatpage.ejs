@@ -88,8 +88,19 @@
 				$("#loginBtn").html("Xin đợi...");
 				socket.emit("client-send-username",$("#username").val());
 			});
-				$("#sendMess").click(function(){
+
+			$("#message").keypress(function (e) {
+			    if (e.which == 13) {
+
+			        socket.emit("user-send-mess",$("#message").val());
+			        $("#message").val('');
+			    }
+			});
+
+
+			$("#sendMess").click(function(){
 					socket.emit("user-send-mess",$("#message").val());
+					$("#message").val('');
 				});
 
 		});
