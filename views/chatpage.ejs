@@ -11,6 +11,7 @@
 <!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
 <!--===============================================================================================-->
+	<link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet">
 	<link rel="stylesheet" type="text/css" href="fonts/Linearicons-Free-v1.0.0/icon-font.min.css">
 <!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="vendor/animate/animate.css">
@@ -34,11 +35,12 @@
 
 	<script type="text/javascript" src="socket.io/socket.io.js"></script>
 	<link rel=stylesheet href="style.css">
+	
 	<audio id="audio" src="noti.mp3"></audio>
 	<script>
 
 			 var socket=io("https://tamsuvoinguoila.herokuapp.com/");
-		  // var socket=io("http://localhost:8080/");
+		   //var socket=io("http://localhost:8080/");
 		//bat su kien login fail
 		socket.on("server-send-login-failed",function(){
 			alert("Tên người dùng đã tồn tại!");
@@ -62,8 +64,17 @@
 					
 			});
 		});
+		//Bat su kien nguoi la vao phong
+		socket.on("server-send-stranger",function(){
+			$("#blink").html("Người lạ đã vào phòng !<br> ♥ Hãy nói gì đó ♥ ");
+			$("#blink").css("color","green");
+
+		});
+
+
 		//Nhan message
 		socket.on("server-send-mess",function(data){
+			$("#blink").hide();
 			//Auto scroll xuong cuoi div khi nhan duoc message
 			$("#chatBox").animate({ scrollTop: $('#chatBox').prop("scrollHeight")}, 1000);
 			//Notification sound
@@ -293,9 +304,11 @@
 				<!-- ________________________ -->
 
 				<!-- Noi dung chat -->
+
 				<div class="row">
 					<div class="col-md-12 right-header-contentChat" id="chatBox">
 						<ul id="messBox">
+							<div id="blink" class="blink"><span>Đang chờ người lạ ...</span></div>
 							<!-- <li>
 								<div class="rightside-left-chat">
 									<span><i class="fa fa-circle" aria-hidden="true"></i> joi chak <small>10:00 AM,Today</small> </span><br><br>
@@ -317,7 +330,7 @@
 				</div>
 				<div class="row">
 					<div class="col-md-12 right-chat-textbox">
-						<input id="message" type="text"><a style="cursor: pointer;" id="sendMess" ><i class="fa fa-arrow-right" aria-hidden="true"></i></a>
+						<input id="message" type="text" placeholder="Nói gì đó!" style="width: 70%;"><a style="cursor: pointer;" id="sendMess" ><i class="fa fa-arrow-right" aria-hidden="true"></i></a><i class="fa fa-image"></i><i class="fa fa-paper-plane"></i>
 					</div>
 				</div>
 			</div>
