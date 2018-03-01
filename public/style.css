@@ -1,3 +1,14 @@
+@media (max-width: 991px) {
+    
+ 
+    #left-sidebar {
+        display:none !important;
+    }
+}
+
+
+
+
 @keyframes click-wave {
   0% {
     height: 40px;
@@ -20,6 +31,10 @@
 #gender label{
   width: 30%;
 }
+
+
+
+
 
 .option-input {
   -webkit-appearance: none;
@@ -92,5 +107,41 @@
 50%{opacity: .5;}
 100%{opacity: 1;}
 }
-  
 
+
+.blink_noti{
+
+    font-size: 25px;
+    font-family: 'Lobster', cursive;
+    color: green;
+    /*animation: blink 3s linear infinite;*/
+    text-align: center;
+  }
+
+#notiboard{
+  font-family: 'Lobster', cursive;
+    color: #f2eded;
+    font-size: 25px;
+    
+     background-size:     cover;                    
+    background-repeat:   no-repeat;
+    background-position: center center
+}
+ 
+ 
+/*@keyframes blink{
+0%{opacity: 0;}
+50%{opacity: .5;}
+100%{opacity: 1;}
+}*/
+  
+@media screen and (max-width: 600px) {
+  #left-sidebar {
+    visibility: hidden;
+    clear: both;
+    float: left;
+    margin: 10px auto 5px 20px;
+    width: 28%;
+    display: none;
+  }
+}
