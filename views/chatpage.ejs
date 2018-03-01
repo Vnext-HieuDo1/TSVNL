@@ -40,7 +40,7 @@
 	<script>
 
 			 var socket=io("https://tamsuvoinguoila.herokuapp.com/");
-		   //var socket=io("http://localhost:8080/");
+		  // var socket=io("http://localhost:8080/");
 		//bat su kien login fail
 		socket.on("server-send-login-failed",function(){
 			alert("Tên người dùng đã tồn tại!");
@@ -268,13 +268,10 @@
 
 	<!-- Chat page -->
 	<div id="chatForm" class="container main-section">
-		<div class="row">
-			<div class="col-md-3 col-sm-3 col-xs-12 left-sidebar">
-				<div class="input-group searchbox">
-					<input class="form-control" placeholder="Search" name="srch-term" id="srch-term" type="text">
-					<div class="input-group-btn">
-						<button class="btn btn-default search-icon" type="submit"><i class="glyphicon glyphicon-search"></i></button>
-					</div>
+		<div class="row" class="hidden-sm-down">
+			<div id="left-sidebar"  class="col-md-3 col-sm-3 col-xs-12 left-sidebar">
+				<div class="input-group searchbox" id="notiboard">
+					<label>Danh sách đang online</label>
 				</div>
 				<!-- Danh sach useronline -->
 				<div class="left-chat" >
